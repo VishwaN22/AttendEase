@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+
+
 
 import './LoginPage.css'
 
@@ -8,6 +12,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('employee'); // Default role
   const navigate = useNavigate();
+  const { user, login, logout } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,27 +24,10 @@ const LoginPage = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        // // Navigate based on user role after login
-        // switch (data.user.role) {
-        //   case 'superadmin':
-        //   case 'admin':
-        //     navigate('/admin');
-        //     break;
-        //   case 'manager':
-        //     navigate('/manager');
-        //     break;
-        //   case 'employee':
-        //     navigate('/employee');
-        //     break;
-        //   default:
-        //     navigate('/');
-        //     break;
-
-        // Store token in local storage
-        localStorage.setItem('token', data.token);
-
-        // Navigate based on redirectUrl from the response
-        navigate(data.redirectUrl);
+        
+        
+        
+        login(data)
         
       } else {
         alert(data.message);
