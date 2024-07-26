@@ -22,7 +22,7 @@ function App() {
       />
       <Route
         path="/employee"
-        element={<PrivateRoute roles={['employee']} component={<EmployeeDashboard></EmployeeDashboard>} />}
+        element={<PrivateRoute roles={['employee']} component={EmployeeDashboard} />}
       />
     </Routes>
   );

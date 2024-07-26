@@ -15,6 +15,7 @@ const PrivateRoute = ({ component: Component, roles }) => {
   }
 
   if (roles && !roles.includes(user.role)) {
+      console.log("role in Priv", user.role)
     return <Navigate to="/" />;
   }
 
@@ -24,22 +25,4 @@ const PrivateRoute = ({ component: Component, roles }) => {
 export default PrivateRoute;
 
 
-// import React, { useContext } from 'react';
-// import { Navigate } from 'react-router-dom';
-// import { AuthContext } from '../context/AuthContext';
 
-// const PrivateRoute = ({ component: Component, roles }) => {
-//   const { user } = useContext(AuthContext);
-
-//   if (!user) {
-//     return <Navigate to="/login" />;
-//   }
-
-//   if (roles && !roles.includes(user.role)) {
-//     return <Navigate to="/" />;
-//   }
-
-//   return <Component />;
-// };
-
-// export default PrivateRoute;

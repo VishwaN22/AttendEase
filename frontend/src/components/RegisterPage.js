@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, {useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css' ;
+import { AuthContext } from '../context/AuthContext';
 
 const RegisterPage = () => {
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('employee'); // Default role
   const navigate = useNavigate();
+  const { user, login, logout } = useContext(AuthContext);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,16 +20,19 @@ const RegisterPage = () => {
         body: JSON.stringify({ email, password, role }), 
       });
       const data = await response.json();
+      console.log(data)
       if (response.ok) {
         
-        
-        if (data.redirectUrl) {
-          console.log(data.redirectUrl);
-          navigate(data.redirectUrl);
-          console.log("navigated")
-        } else {
-          navigate('/login');
-       } }
+          
+        login(data)
+        // if (data.redirectUrl) {
+          
+        //   navigate(data.redirectUrl);
+          
+        // } else {
+        //   navigate('/login');
+        // } 
+      }
       else {
         alert(data.message);
       }

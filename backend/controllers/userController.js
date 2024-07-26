@@ -29,7 +29,7 @@ const register = async (req, res) => {
     }[role] || '/login'; // Default to login if role is not found
     console.log(`Received role: ${role}`);
 
-    res.status(201).json({ message: 'User registered successfully', redirectUrl });
+    res.status(201).json({ message: 'User registered successfully', redirectUrl, user: {role} });
   } catch (error) {
     console.error('Registration error', error);
     res.status(500).json({ message: 'Server error' });
