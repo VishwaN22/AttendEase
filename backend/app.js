@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
+const attendanceRoutes = require('./routes/attendanceRoutes');
+const leaveRequestRoutes = require('./routes/leaveRequestRoutes');
 const { mongoURI } = require('./config.js');
 const cors = require('cors');
 const app = express();
@@ -14,6 +16,10 @@ const corsOptions = {
 app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
+app.use('/api', userRoutes);
+app.use('/api/attendance', attendanceRoutes);
+app.use('/api/leave-request', leaveRequestRoutes);
+app.use('api/attendance/mark',attendanceRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running');
@@ -25,6 +31,7 @@ mongoose.connect(mongoURI)
 
 
 
+  
 // error handlers
 const errorHandler = require('./middlewares/errorHandler');
 app.use(errorHandler);

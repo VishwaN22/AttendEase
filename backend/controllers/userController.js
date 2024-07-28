@@ -36,7 +36,39 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register };
+// Fetch all employees
+const getAllEmployees = async (req, res) => {
+  try {
+    const employees = await User.find({ role: 'employee' }).select('email');
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+//get manager details
+
+const getManagers = async (req, res) => {
+  try {
+    const managers = await User.find({ role: 'manager' }).select('email');
+    res.json(managers);
+  } catch (error) {
+    console.error('Error fetching managers', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Fetch current user details
+const getUserDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('email');
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { register, getAllEmployees, getUserDetails, getManagers };
 
 
 
