@@ -1,8 +1,8 @@
 // userRoutes.js
 const express = require('express');
-const { register } = require('../controllers/userController');
+const { register, getAllEmployees, getUserDetails } = require('../controllers/userController');
 const { login } = require('../controllers/authController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const authMiddleware= require('../middlewares/authMiddleware');
 const { check } = require('express-validator');
 
 const router = express.Router();
@@ -34,6 +34,19 @@ router.get('/manager', authMiddleware(['manager']), (req, res) => {
 
 router.get('/employee', authMiddleware(['employee']), (req, res) => {
   res.json({ message: 'Employee dashboard' });
+});
+
+router.get('/users/employees', authMiddleware(['admin', 'manager']), getAllEmployees);
+ 
+// router.get('/users/me',authMiddleware(), getUserDetails);
+router.get('/users/me', authMiddleware(), (req, res) => {
+  console.log('Received request for /users/me');
+  getUserDetails(req, res);
+});
+
+router.get('/attendance', authMiddleware(), (req, res) => {
+  console.log('Received request for /attendance');
+  getAttendance(req, res);
 });
 
 module.exports = router;

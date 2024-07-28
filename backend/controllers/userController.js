@@ -36,7 +36,27 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register };
+// Fetch all employees
+const getAllEmployees = async (req, res) => {
+  try {
+    const employees = await User.find({ role: 'employee' }).select('email');
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Fetch current user details
+const getUserDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('email');
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { register, getAllEmployees, getUserDetails };
 
 
 
