@@ -1,71 +1,111 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const [attendanceData, setAttendanceData] = useState([]);
-  const [attendance, setAttendance] = useState({ userId: '', date: '', status: 'present' });
+  const [managers, setManagers] = useState([]);
+  const [attendance, setAttendance] = useState([]);
+  const [adminEmail, setAdminEmail] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get('/api/attendance', {
+
+    // Fetch managers list
+    axios.get('http://localhost:5000/api/users/managers', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
-      setAttendanceData(response.data);
+      setManagers(response.data);
     }).catch(error => {
-      console.error('Error fetching attendance data', error);
+      console.error('Error fetching managers', error);
+    });
+
+    // Fetch admin email
+    axios.get('http://localhost:5000/api/users/me', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }).then(response => {
+      setAdminEmail(response.data.email);
+    }).catch(error => {
+      console.error('Error fetching admin email', error);
     });
   }, []);
 
-  const handleAttendanceSubmit = (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-    axios.post('/api/attendance/mark-admin', attendance, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).then(response => {
-      alert('Attendance marked successfully');
-    }).catch(error => {
-      console.error('Error marking attendance', error);
-    });
+  const handleAttendanceChange = (userId, status) => {
+    const updatedAttendance = attendance.map(att =>
+      att.userId === userId ? { ...att, status } : att
+    );
+    setAttendance(updatedAttendance);
   };
 
+  const handleAttendanceSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    const attendanceData = managers.map(manager => ({
+      userId: manager._id,
+      date: selectedDate,
+      status: attendance.find(att => att.userId === manager._id)?.status || 'present'
+    }));
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/attendance/mark-admin', attendanceData, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      alert('Attendance marked successfully');
+    } catch (error) {
+      console.error('Error marking attendance', error);
+    }
+  };
+
+  useEffect(() => {
+    const initialAttendance = managers.map(manager => ({
+      userId: manager._id,
+      status: 'present'
+    }));
+    setAttendance(initialAttendance);
+  }, [managers]);
+
   return (
-    <div>
+    <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
+      <p>Welcome, {adminEmail}</p>
+
       <section>
-        <h2>Mark Manager's Attendance</h2>
-        <form onSubmit={handleAttendanceSubmit}>
-          <input
-            type="text"
-            placeholder="Manager ID"
-            value={attendance.userId}
-            onChange={(e) => setAttendance({ ...attendance, userId: e.target.value })}
-            required
-          />
+        <h2>Mark Manager Attendance</h2>
+        <div className="date-selection">
           <input
             type="date"
-            value={attendance.date}
-            onChange={(e) => setAttendance({ ...attendance, date: e.target.value })}
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
             required
           />
-          <select
-            value={attendance.status}
-            onChange={(e) => setAttendance({ ...attendance, status: e.target.value })}
-            required
-          >
-            <option value="present">Present</option>
-            <option value="absent">Absent</option>
-            <option value="leave">Leave</option>
-          </select>
-          <button type="submit">Submit</button>
+        </div>
+        <form onSubmit={handleAttendanceSubmit}>
+          <table>
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {managers.map(manager => (
+                <tr key={manager._id}>
+                  <td>{manager.email}</td>
+                  <td>
+                    <select
+                      value={attendance.find(att => att.userId === manager._id)?.status || 'present'}
+                      onChange={(e) => handleAttendanceChange(manager._id, e.target.value)}
+                    >
+                      <option value="present">Present</option>
+                      <option value="absent">Absent</option>
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button type="submit">Mark Attendance</button>
         </form>
-      </section>
-      <section>
-        <h2>Attendance Records</h2>
-        <ul>
-          {attendanceData.map((entry, index) => (
-            <li key={index}>{entry.date}: {entry.status}</li>
-          ))}
-        </ul>
       </section>
     </div>
   );

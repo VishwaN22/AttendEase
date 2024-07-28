@@ -1,10 +1,10 @@
 // userRoutes.js
 const express = require('express');
-const { register, getAllEmployees, getUserDetails } = require('../controllers/userController');
+const { register, getAllEmployees, getUserDetails, getManagers } = require('../controllers/userController');
 const { login } = require('../controllers/authController');
 const authMiddleware= require('../middlewares/authMiddleware');
 const { check } = require('express-validator');
-
+const {getAttendance} = require('../controllers/attendanceController')
 const router = express.Router();
 
 // Allow admins to register any role, others can only register as 'employee' or 'manager'
@@ -48,5 +48,8 @@ router.get('/attendance', authMiddleware(), (req, res) => {
   console.log('Received request for /attendance');
   getAttendance(req, res);
 });
+
+
+router.get('/managers', authMiddleware(['admin']), getManagers);
 
 module.exports = router;

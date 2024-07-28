@@ -19,6 +19,7 @@ app.use('/api/users', userRoutes);
 app.use('/api', userRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/leave-request', leaveRequestRoutes);
+app.use('api/attendance/mark',attendanceRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running');

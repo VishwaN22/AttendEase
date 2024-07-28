@@ -1,16 +1,49 @@
 const Attendance = require('../models/Attendance');
 
+// exports.markAttendance = async (req, res) => {
+//   const { userId, date, status } = req.body;
+
+//   try {
+//     const attendance = new Attendance({
+//       userId,
+//       date,
+//       status,
+//     });
+
+//     await attendance.save();
+//     res.json({ message: 'Attendance marked successfully' });
+//   } catch (error) {
+//     console.error('Error marking attendance', error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
+
+
 exports.markAttendance = async (req, res) => {
-  const { userId, date, status } = req.body;
-
   try {
-    const attendance = new Attendance({
-      userId,
-      date,
-      status,
-    });
+    const attendanceData = req.body;
 
-    await attendance.save();
+    // Validate the incoming data
+    if (!Array.isArray(attendanceData) || attendanceData.length === 0) {
+      return res.status(400).json({ message: 'Invalid attendance data' });
+    }
+
+    // Save each attendance record
+    for (const record of attendanceData) {
+      const { userId, date, status } = record;
+      if (!userId || !date || !status) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+
+      const attendance = new Attendance({
+        userId,
+        date,
+        status,
+      });
+
+      await attendance.save();
+    }
+
     res.json({ message: 'Attendance marked successfully' });
   } catch (error) {
     console.error('Error marking attendance', error);

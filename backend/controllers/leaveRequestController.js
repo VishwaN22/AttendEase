@@ -5,7 +5,7 @@ exports.submitLeaveRequest = async (req, res) => {
 
   try {
     const leaveRequest = new LeaveRequest({
-      userId: req.user.id,
+      userId: req.user.userId,
       startDate,
       endDate,
       reason,
@@ -21,7 +21,7 @@ exports.submitLeaveRequest = async (req, res) => {
 
 exports.getLeaveRequests = async (req, res) => {
   try {
-    const leaveRequests = await LeaveRequest.find({ userId: req.user.id });
+    const leaveRequests = await LeaveRequest.find({ userId: req.user.userId });
     res.json(leaveRequests);
   } catch (error) {
     console.error('Error fetching leave requests', error);
