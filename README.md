@@ -18,7 +18,7 @@ The Attendance Management System is a web-based application designed to track an
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Token)
-- **Deployment**: Heroku (or your preferred cloud service)
+
 
 ## Getting Started
 
