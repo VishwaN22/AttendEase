@@ -33,5 +33,4 @@ The Attendance Management System is a web-based application designed to track an
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/yourusername/attendance-management.git
-   cd attendance-management
+   git clone https://github.com/VishwaN22/AttendEase.git
