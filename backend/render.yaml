@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: attend-ease-backend
-    env: node
-    plan: free
-    autoDeploy: true
-    buildCommand: npm install
-    startCommand: npm start
