@@ -8,6 +8,7 @@ body {
   h1, h2 {
     text-align: center;
     color: #333;
+    
   }
   
   .dashboard-container {
@@ -25,7 +26,7 @@ body {
   
   section > h2 {
     margin-bottom: 10px;
-    color: #007bff;
+    color: #368780;
   }
   
   p {
@@ -50,7 +51,7 @@ body {
   }
   
   button {
-    background-color: #007bff;
+    background-color: #368780;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -97,7 +98,7 @@ body {
   }
   
   .react-calendar__navigation button {
-    color: #007bff;
+    color: #368780;
     min-width: 44px;
     background: none;
     font-size: 16px;
@@ -161,7 +162,7 @@ body {
   }
   
   .react-calendar__tile--active {
-    background: #007bff !important;
+    background: #368780 !important;
     color: white !important;
   }
   
