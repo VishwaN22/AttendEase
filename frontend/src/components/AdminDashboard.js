@@ -12,7 +12,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem('token');
 
     // Fetch managers list
-    axios.get('http://localhost:5000/api/users/managers', {
+    axios.get('${process.env.REACT_APP_BACKEND_URL}/api/users/managers', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       setManagers(response.data);
@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     });
 
     // Fetch admin email
-    axios.get('http://localhost:5000/api/users/me', {
+    axios.get('${process.env.REACT_APP_BACKEND_URL}/api/users/me', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       setAdminEmail(response.data.email);
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
     }));
 
     try {
-      const response = await axios.post('http://localhost:5000/api/attendance/mark-admin', attendanceData, {
+      const response = await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/attendance/mark-admin', attendanceData, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       alert('Attendance marked successfully');

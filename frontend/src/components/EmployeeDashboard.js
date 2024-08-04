@@ -15,7 +15,7 @@ const EmployeeDashboard = () => {
     const token = localStorage.getItem('token');
 
     // Fetch profile data
-    axios.get('http://localhost:5000/api/users/me', {
+    axios.get('h${process.env.REACT_APP_BACKEND_URL}/api/users/me', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       setProfile(response.data);
@@ -30,7 +30,7 @@ const EmployeeDashboard = () => {
 
   const fetchAttendance = (month, year) => {
     const token = localStorage.getItem('token');
-    axios.get('http://localhost:5000/api/attendance', {
+    axios.get('${process.env.REACT_APP_BACKEND_URL}/api/attendance', {
       headers: { 'Authorization': `Bearer ${token}` },
       params: { month, year }
     }).then(response => {
@@ -43,7 +43,7 @@ const EmployeeDashboard = () => {
   const handleLeaveRequestSubmit = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    axios.post('http://localhost:5000/api/leave-request/submit', leaveRequest, {
+    axios.post('${process.env.REACT_APP_BACKEND_URL}/api/leave-request/submit', leaveRequest, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       alert('Leave request submitted successfully');
@@ -55,7 +55,7 @@ const EmployeeDashboard = () => {
   const handleWorkReportSubmit = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    axios.post('http://localhost:5000/api/work-report', { report: workReport }, {
+    axios.post('${process.env.REACT_APP_BACKEND_URL}/api/work-report', { report: workReport }, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       alert('Work report submitted successfully');
