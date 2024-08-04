@@ -2,7 +2,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
-
+const { jwtSecret } = require('../config');
 const register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
