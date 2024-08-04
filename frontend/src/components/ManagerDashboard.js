@@ -14,7 +14,7 @@ const ManagerDashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    axios.get('${process.env.REACT_APP_BACKEND_URL}/api/users/employees', {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/employees`, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       setEmployees(response.data);
@@ -22,7 +22,7 @@ const ManagerDashboard = () => {
       console.error('Error fetching employees', error);
     });
 
-    axios.get('${process.env.REACT_APP_BACKEND_URL}/api/users/me', {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/me`, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       setManagerEmail(response.data.email);
@@ -50,7 +50,7 @@ const ManagerDashboard = () => {
     console.log('Sending attendance data:', attendanceData); // Log the data being sent
 
     try {
-      const response = await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/attendance/mark', attendanceData, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/attendance/mark`, attendanceData, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       alert('Attendance marked successfully');
