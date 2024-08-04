@@ -24,7 +24,7 @@ const register = async (req, res) => {
 
 
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, jwtSecret, { expiresIn: '1h' });
+    const token = jwt.sign( { userId: newUser._id, role: newUser.role }, jwtSecret, { expiresIn: '1h' });
 
 
     // Determine redirect URL based on role
