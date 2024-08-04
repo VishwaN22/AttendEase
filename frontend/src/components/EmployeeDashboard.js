@@ -15,7 +15,7 @@ const EmployeeDashboard = () => {
     const token = localStorage.getItem('token');
 
     // Fetch profile data
-    axios.get(`h${process.env.REACT_APP_BACKEND_URL}/api/users/me`, {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/me`, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => {
       setProfile(response.data);
