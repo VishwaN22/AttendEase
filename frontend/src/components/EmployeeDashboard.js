@@ -64,6 +64,11 @@ const EmployeeDashboard = () => {
     });
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear token from local storage
+    navigate('/'); // Redirect to home page
+  };
+
   const getTileClassName = ({ date, view }) => {
     if (view === 'month') {
       const dateString = date.toISOString().split('T')[0];
@@ -80,6 +85,8 @@ const EmployeeDashboard = () => {
   return (
     <div>
       <h1>Employee Dashboard</h1>
+      <button onClick={handleLogout} style={{ float: 'right', marginTop: '-50px' }}>Logout</button>
+      
       <section>
         <h2>Profile</h2>
         <p>Email: {profile.email}</p>

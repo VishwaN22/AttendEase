@@ -19,7 +19,7 @@ const HomePage = () => {
         <div className="hero-content">
           <h1 className="hero-title">Streamline Your Attendance Management</h1>
           <p className="hero-tagline">Effortlessly track and manage employee attendance with AttendEase</p>
-          <Link to="/register" className="btn btn-primary">Get Started</Link>
+          {/* <Link to="/register" className="btn btn-primary">Get Started</Link> */}
         </div>
         <div className="hero-image">
           {/* Add your main hero image here */}

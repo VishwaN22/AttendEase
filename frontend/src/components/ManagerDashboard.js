@@ -67,9 +67,17 @@ const ManagerDashboard = () => {
     setAttendance(initialAttendance);
   }, [employees]);
 
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear token from local storage
+    navigate('/'); // Redirect to home page
+  };
+
   return (
     <div className="manager-dashboard">
       <h1>Manager Dashboard</h1>
+      <button onClick={handleLogout} style={{ float: 'right', marginTop: '-50px' }}>Logout</button>
+      
       <p>Welcome, {managerEmail}</p>
 
       <section>
