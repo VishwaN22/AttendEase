@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminDashboard.css';
 
@@ -7,6 +8,7 @@ const AdminDashboard = () => {
   const [attendance, setAttendance] = useState([]);
   const [adminEmail, setAdminEmail] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');

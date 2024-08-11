@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -10,6 +12,7 @@ const EmployeeDashboard = () => {
   const [leaveRequest, setLeaveRequest] = useState({ startDate: '', endDate: '', reason: '' });
   const [workReport, setWorkReport] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
